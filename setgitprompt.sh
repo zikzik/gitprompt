@@ -84,5 +84,11 @@ git_prompt() {
 	fi
 }
 
-export PROMPT_COMMAND="export PS1=\"\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\$(git_prompt)\[\033[01;34m\] \$\[\033[00m\] \""
+zgitprompt() {
+	export PS1="\[\033[01;32m\]\u@\h\[\033[01;34m\] \w$(git_prompt)\[\033[01;34m\] \$\[\033[00m\] "
+
+}
+
+# Attempt at preserving previous PROMPT_COMMAND(s) while not appending zgitprompt again on further invocations
+echo $PROMPT_COMMAND | grep -v zgitprompt > /dev/null && export PROMPT_COMMAND="$PROMPT_COMMAND;zgitprompt"
 
