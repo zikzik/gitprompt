@@ -68,17 +68,20 @@ function git_unmerged_commits {
 
 # Get the current git branch name (if available)
 git_prompt() {
-  # local ref=$(git symbolic-ref HEAD 2>/dev/null | cut -d'/' -f3)
-  local ref=$(git branch 2>/dev/null | grep '^\*' | cut -b 3- | sed 's/[\(\)]//g')
+	# local ref=$(git symbolic-ref HEAD 2>/dev/null | cut -d'/' -f3)
+	local ref=$(git branch 2>/dev/null | grep '^\*' | cut -b 3- | sed 's/[\(\)]//g')
 
-  if [ "$ref" != "" ]
-  then
-  	local remote=`git config branch.$ref.remote`
-	local merge=`git config branch.$ref.merge`
-	local remotebranch=${remote}/`expr "$merge" : '^refs/heads/\(.*\)$'`
-    echo "
-\[\033[0;30m\](\[\033[01;34m\]$ref$(git_dirty)$(git_staged)$(evil_git_stash)$(git_unmerged_commits $remotebranch)$(git_unpushed_commits $remotebranch)\[\033[0;30m\])"
-  fi
+	if [ "$ref" != "" ]; then
+		if [ "$ref" != "no branch" ]; then
+			local remote=`git config branch.$ref.remote`
+			local merge=`git config branch.$ref.merge`
+			local remotebranch=${remote}/`expr "$merge" : '^refs/heads/\(.*\)$'`
+			echo "\n\[\033[0;30m\](\[\033[01;34m\]$ref$(git_dirty)$(git_staged)$(evil_git_stash)$(git_unmerged_commits $remotebranch)$(git_unpushed_commits $remotebranch)\[\033[0;30m\])"
+		else
+			# FIXME: git describe here!!!
+			echo "\n\[\033[0;30m\](\[\033[01;34m\]$ref(`git describe`)$(git_dirty)$(git_staged)$(evil_git_stash)\[\033[0;30m\])"
+		fi
+	fi
 }
 
 export PROMPT_COMMAND="export PS1=\"\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\$(git_prompt)\[\033[01;34m\] \$\[\033[00m\] \""
