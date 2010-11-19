@@ -79,7 +79,7 @@ git_prompt() {
 			echo "\n\[\033[0;30m\](\[\033[01;34m\]$ref$(git_dirty)$(git_staged)$(evil_git_stash)$(git_unmerged_commits $remotebranch)$(git_unpushed_commits $remotebranch)\[\033[0;30m\])"
 		else
 			# FIXME: git describe here!!!
-			echo "\n\[\033[0;30m\](\[\033[01;34m\]$ref(`git describe`)$(git_dirty)$(git_staged)$(evil_git_stash)\[\033[0;30m\])"
+			echo "\n\[\033[0;30m\](\[\033[01;34m\]$ref\[\033[0;33m\](`git describe`)$(git_dirty)$(git_staged)$(evil_git_stash)\[\033[0;30m\])"
 		fi
 	fi
 }
