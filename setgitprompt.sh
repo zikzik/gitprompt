@@ -75,7 +75,9 @@ git_prompt() {
 		if [ "$ref" != "no branch" ]; then
 			local remote=`git config branch.$ref.remote`
 			local merge=`git config branch.$ref.merge`
-			local remotebranch=${remote}/`expr "$merge" : '^refs/heads/\(.*\)$'`
+			if [[ -n "$remote" && -n "$merge" ]]; then
+				local remotebranch=${remote}/`expr "$merge" : '^refs/heads/\(.*\)$'`
+			fi
 			echo "\n\[\033[0;30m\](\[\033[01;34m\]$ref$(git_dirty)$(git_staged)$(evil_git_stash)$(git_unmerged_commits $remotebranch)$(git_unpushed_commits $remotebranch)\[\033[0;30m\])"
 		else
 			echo "\n\[\033[0;30m\](\[\033[01;34m\]$ref\[\033[0;33m\](`git describe`)$(git_dirty)$(git_staged)$(evil_git_stash)\[\033[0;30m\])"
