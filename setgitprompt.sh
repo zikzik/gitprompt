@@ -91,5 +91,11 @@ zgitprompt() {
 }
 
 # Attempt at preserving previous PROMPT_COMMAND(s) while not appending zgitprompt again on further invocations
-echo $PROMPT_COMMAND | grep -v zgitprompt > /dev/null && export PROMPT_COMMAND="$PROMPT_COMMAND;zgitprompt"
+echo $PROMPT_COMMAND | grep -v zgitprompt > /dev/null 2>&1 && {
+	if echo $PROMPT_COMMAND | grep -e '; *$'> /dev/null 2>&1 ; then
+		export PROMPT_COMMAND="${PROMPT_COMMAND} zgitprompt;"
+	else
+		export PROMPT_COMMAND="${PROMPT_COMMAND} ; zgitprompt;"
+	fi
+}
 
