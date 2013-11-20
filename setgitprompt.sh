@@ -6,7 +6,7 @@
 
 # Returns "*" if the current git branch is dirty.
 function git_dirty {
-	git status --porcelain 2>/dev/null | egrep "^(\?\?| [MD])" > /dev/null && echo "\[\033[01;31m\]*"
+	git status --porcelain 2>/dev/null | egrep "^(\?\? |[ A][MD])" > /dev/null && echo "\[\033[01;31m\]*"
 }
 
 
