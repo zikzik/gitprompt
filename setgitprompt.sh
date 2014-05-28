@@ -73,8 +73,8 @@ git_prompt() {
 
 	if [ "$ref" != "" ]; then
 		if [ "$ref" != "no branch" ]; then
-			local remote=`git config branch.$ref.remote`
-			local merge=`git config branch.$ref.merge`
+			local remote=`git config branch.$ref.remote 2> /dev/null`
+			local merge=`git config branch.$ref.merge 2> /dev/null`
 			if [[ -n "$remote" && -n "$merge" ]]; then
 				local remotebranch=${remote}/`expr "$merge" : '^refs/heads/\(.*\)$'`
 			fi
