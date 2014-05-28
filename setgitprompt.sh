@@ -48,7 +48,7 @@ function git_unpushed_commits {
 	if [ -z "$1" ]; then
 		return 0;
 	fi
-	local unpushed=`expr $( git log --oneline $1.. | wc -l )`
+	local unpushed=`expr $( git log --oneline $1.. -- | wc -l )`
 	if [ "$unpushed" != "0" ]; then
 		echo "\[\033[0;30m\]|\[\033[01;31m\]>$unpushed"
 	fi
@@ -59,7 +59,7 @@ function git_unmerged_commits {
 	if [ -z "$1" ]; then
 		return 0;
 	fi
-	local unmerged=`expr $( git log --oneline ..$1 | wc -l )`
+	local unmerged=`expr $( git log --oneline ..$1 -- | wc -l )`
 	if [ "$unmerged" != "0" ]; then
 		echo "\[\033[0;30m\]|\[\033[01;35m\]<$unmerged"
 	fi
