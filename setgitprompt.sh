@@ -6,13 +6,13 @@
 
 # Returns "*" if the current git branch is dirty.
 function git_dirty {
-	git status --porcelain 2>/dev/null | egrep "^(\?\? |.[MADRCU])" > /dev/null && echo "\[\033[01;31m\]*"
+	git status --porcelain 2>/dev/null | egrep "^(\?\? |.[MADRCUT])" > /dev/null && echo "\[\033[01;31m\]*"
 }
 
 
 # Returns "*" if the current git branch has staged changes.
 function git_staged {
-	git status --porcelain 2>/dev/null | egrep "^[MADRC]" > /dev/null && echo "\[\033[01;32m\]*"
+	git status --porcelain 2>/dev/null | egrep "^[MADRCT]" > /dev/null && echo "\[\033[01;32m\]*"
 }
 
 
